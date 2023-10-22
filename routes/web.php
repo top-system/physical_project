@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/show', \App\Http\Controllers\BotController::class . "@show");
-Route::get('/body', \App\Http\Controllers\BotController::class . "@sendMessage");
-Route::any('/{token}/webhook', \App\Http\Controllers\WebHookController::class . "@index");
+Route::get('/show', \App\Http\Controllers\FoorballController::class . "@getEvents");
 
 Route::group(['prefix' => 'admin'], function () {
     Admin::routes();

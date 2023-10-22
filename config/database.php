@@ -93,6 +93,18 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'host' => 'localhost',
+            'port' => '27017',
+            'database' => 'football',
+            'username' => '',
+            'password' => '',
+            'options' => [
+                'appname' => 'homestead',
+            ],
+        ],
+
     ],
 
     /*
