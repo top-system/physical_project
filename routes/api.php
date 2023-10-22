@@ -19,3 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::any('v1/get_leagues',\App\Http\Controllers\FootballController::class . "@getLeagues");
 Route::any('v1/get_events',\App\Http\Controllers\FootballController::class . "@getEvents");
+Route::any('v1/get_posts',\App\Http\Controllers\PostController::class . "@getPosts");
+Route::any('v1/get_posts/{id}',\App\Http\Controllers\PostController::class . "@getPost");
