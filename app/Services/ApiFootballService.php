@@ -155,7 +155,7 @@ class ApiFootballService{
     public function getLineups($match_id){
         $response = $this->client->get('',[
             'query' =>  [
-                'action'    =>  'get_standings',
+                'action'    =>  'get_lineups',
                 'APIkey'    =>  $this->apiKey,
                 'match_id'   =>  $match_id
             ]
@@ -209,7 +209,7 @@ class ApiFootballService{
      * @return void
      * @throws GuzzleException
      */
-    public function getLiveOddsCommnets($country_id, $league_id, $match_id){
+    public function getLiveOddsCommnets($match_id='',$country_id='', $league_id=''){
         $response = $this->client->get('',[
             'query' =>  [
                 'action'    =>  'get_live_odds_commnets',

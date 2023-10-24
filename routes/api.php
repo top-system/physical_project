@@ -23,3 +23,8 @@ Route::any('v1/get_events/{id}',\App\Http\Controllers\FootballController::class 
 Route::any('v1/get_posts',\App\Http\Controllers\PostController::class . "@getPosts");
 Route::any('v1/get_categories',\App\Http\Controllers\CategoryController::class . "@getCategories");
 Route::any('v1/get_posts/{id}',\App\Http\Controllers\PostController::class . "@getPost");
+Route::any('v1/get_h2h',\App\Http\Controllers\FootballController::class . "@getH2H");
+Route::any('v1/get_lineups/{match_id}',\App\Http\Controllers\FootballController::class . "@getLineups");
+Route::any('v1/get_live_odds_commnets',\App\Http\Controllers\FootballController::class . "@getLiveOddsCommnets");
+Route::any('v1/get_chatrecode/{room_id}',\App\Http\Controllers\ChatRoomController::class . "@getChatRecode");
+Route::any('v1/get_index/{match_id}',\App\Http\Controllers\FootballController::class . "@getIndex");
