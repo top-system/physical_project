@@ -15,7 +15,27 @@ class FootballController extends Controller
         return response()->json($response);
     }
     public function getEvents(Request $request){
-        $eventDb = DB::connection('mongodb')->collection('events');
+        $eventDb = DB::connection('mongodb')
+            ->collection('events')
+            ->select([
+                'match_id',
+                'country_id',
+                'country_name',
+                'league_id',
+                'league_name',
+                'match_date',
+                'match_status',
+                'match_time',
+                'match_hometeam_id',
+                'match_hometeam_name',
+                'match_hometeam_score',
+                'match_awayteam_name',
+                'match_awayteam_id',
+                'match_awayteam_score',
+                'match_hometeam_halftime_score',
+                'match_awayteam_halftime_score',
+                'stage_name'
+            ]);
         // 查询已经结束的 赛果
         if ($request->get('status') == 1){
             $eventDb = $eventDb->where('match_status','Finished');
@@ -31,5 +51,11 @@ class FootballController extends Controller
         }
         $response = $eventDb->paginate(10);
         return response()->json($response);
+    }
+    public function getEvent(Request $request, $id){
+        $eventDb = DB::connection('mongodb')
+            ->collection('events');
+        $response = $eventDb->where('match_id', $id)->first();
+        return response()->json(['code' => 0, 'data' => $response]);
     }
 }

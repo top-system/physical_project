@@ -18,6 +18,6 @@ class PostController extends Controller
 
     public function getPost(Request $request, $id){
         $response = Post::find($id);
-        return response()->json($response);
+        return response()->json(['code' => 0,'data' => $response]);
     }
 }
