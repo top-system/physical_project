@@ -12,7 +12,7 @@ class PostController extends Controller
         if ($request->has('category_id')){
             $postModel = $postModel->where('category_id',$request->get('category_id'));
         }
-        $response = $postModel->select(['title','tags'])->paginate(10);
+        $response = $postModel->select(['id','title','tags'])->paginate(10);
         return response()->json($response);
     }
 
