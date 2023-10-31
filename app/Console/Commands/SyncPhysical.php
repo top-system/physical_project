@@ -15,7 +15,7 @@ class SyncPhysical extends Command
      *
      * @var string
      */
-    protected $signature = 'sync:physical';
+    protected $signature = 'sync:physical {action}';
 
     /**
      * The console command description.
@@ -31,15 +31,27 @@ class SyncPhysical extends Command
      */
     public function handle()
     {
-        $this->getEvents();
+        $action = $this->argument('action');
+        if ($action == "init"){
+            $this->getEvents(date("Y-m-d",strtotime("-1 day")),date("Y-m-d",strtotime("-1 day")));
+            $this->getEvents(date("Y-m-d",strtotime("-2 day")),date("Y-m-d",strtotime("-2 day")));
+            $this->getEvents(date("Y-m-d",strtotime("-3 day")),date("Y-m-d",strtotime("-3 day")));
+            $this->getEvents(date("Y-m-d",strtotime("-4 day")),date("Y-m-d",strtotime("-4 day")));
+            $this->getEvents(date("Y-m-d",strtotime("-5 day")),date("Y-m-d",strtotime("-5 day")));
+        }else if ($action == "sync"){
+            $this->getEvents(date("Y-m-d",strtotime("-5 day")),date("Y-m-d",strtotime("-5 day")));
+        }else{
+            $this->getEvents(date("Y-m-d"),date("Y-m-d"));
+        }
         return Command::SUCCESS;
     }
 
-    public function getEvents()
+    public function getEvents($from,$to)
     {
         $eventDb = DB::connection('mongodb')->collection('events');
         $api = ApiFootballService::getInstance();
-        $response = $api->getEvents([]);
+
+        $response = $api->getEvents(["from" => $from,"to" => $to]);
         $translate = Translate::getInstance();
         foreach ($response as &$resp) {
             $resp['country_name'] = $translate->to($resp['country_name']);

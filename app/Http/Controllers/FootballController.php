@@ -46,6 +46,7 @@ class FootballController extends Controller
         // 查询已经结束的 赛果
         if ($request->get('status') == 1){
             $eventDb = $eventDb->where('match_status','Finished');
+            $eventDb = $eventDb->where('match_date',date("Y-m-d"));
         }
         // 查询正在进行中的
         elseif ($request->get('status') == 2){
@@ -53,7 +54,7 @@ class FootballController extends Controller
                 ->where('match_status','!=','Finished')
                 ->where('match_time','>',date("i:s"));
         }
-        if ($request->get('date')){
+        if ($request->has('date')){
             $eventDb = $eventDb->where('match_date',$request->get('date'));
         }
         $response = $eventDb->paginate(10);
