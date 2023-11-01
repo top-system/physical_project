@@ -28,3 +28,6 @@ Route::any('v1/get_lineups/{match_id}',\App\Http\Controllers\FootballController:
 Route::any('v1/get_live_odds_commnets',\App\Http\Controllers\FootballController::class . "@getLiveOddsCommnets");
 Route::any('v1/get_chatrecode/{room_id}',\App\Http\Controllers\ChatRoomController::class . "@getChatRecode");
 Route::any('v1/get_index/{match_id}',\App\Http\Controllers\FootballController::class . "@getIndex");
+Route::any('v1/datastore/get_race',\App\Http\Controllers\DataStoreController::class . "@getRace");
+Route::any('v1/datastore/get_score',\App\Http\Controllers\DataStoreController::class . "@getScore");
+Route::any('v1/datastore/get_scorers',\App\Http\Controllers\DataStoreController::class . "@getScorers");
