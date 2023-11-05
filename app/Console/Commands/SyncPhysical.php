@@ -40,7 +40,10 @@ class SyncPhysical extends Command
             $this->getEvents(date("Y-m-d",strtotime("-5 day")),date("Y-m-d",strtotime("-5 day")));
         }else if ($action == "sync"){
             $this->getEvents(date("Y-m-d",strtotime("-5 day")),date("Y-m-d",strtotime("-5 day")));
-        }else{
+        }else if ($action == "initCache"){
+            (new Translate())->initCache();
+        }
+        else{
             $this->getEvents(date("Y-m-d"),date("Y-m-d"));
         }
         return Command::SUCCESS;
@@ -50,9 +53,9 @@ class SyncPhysical extends Command
     {
         $eventDb = DB::connection('mongodb')->collection('events');
         $api = ApiFootballService::getInstance();
+        $translate = Translate::getInstance();
 
         $response = $api->getEvents(["from" => $from,"to" => $to]);
-        $translate = Translate::getInstance();
         foreach ($response as &$resp) {
             $resp['country_name'] = $translate->to($resp['country_name']);
             $resp['league_name'] = $translate->to($resp['league_name']);
