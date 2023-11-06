@@ -62,8 +62,12 @@ class Translate
 
     public function initCache(): void
     {
-        foreach (Language::all() as $lang){
-            $this->redis->hSet($this->cacheKey, $lang['key_name'], $lang['value']);
+        $sum = 0;
+        while (($rows = Language::where("id",">",$sum)->limit(1000)->get())){
+            foreach ($rows as $lang){
+                $this->redis->hSet($this->cacheKey, $lang['key_name'], $lang['value']);
+            }
+            $sum+=1000;
         }
     }
 
