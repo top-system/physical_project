@@ -41,13 +41,13 @@ class SyncPhysical extends Command
         $this->translate = Translate::getInstance();
 
         if ($action == "init"){
-            $this->getEvents(date("Y-m-d",strtotime("-1 day")),date("Y-m-d",strtotime("-1 day")));
-            $this->getEvents(date("Y-m-d",strtotime("-2 day")),date("Y-m-d",strtotime("-2 day")));
-            $this->getEvents(date("Y-m-d",strtotime("-3 day")),date("Y-m-d",strtotime("-3 day")));
-            $this->getEvents(date("Y-m-d",strtotime("-4 day")),date("Y-m-d",strtotime("-4 day")));
-            $this->getEvents(date("Y-m-d",strtotime("-5 day")),date("Y-m-d",strtotime("-5 day")));
+            $this->getEvents(date("Y-m-d",strtotime("+1 day")),date("Y-m-d",strtotime("+1 day")));
+            $this->getEvents(date("Y-m-d",strtotime("+2 day")),date("Y-m-d",strtotime("+2 day")));
+            $this->getEvents(date("Y-m-d",strtotime("+3 day")),date("Y-m-d",strtotime("+3 day")));
+            $this->getEvents(date("Y-m-d",strtotime("+4 day")),date("Y-m-d",strtotime("+4 day")));
+            $this->getEvents(date("Y-m-d",strtotime("+5 day")),date("Y-m-d",strtotime("+5 day")));
         }else if ($action == "sync"){
-            $this->getEvents(date("Y-m-d",strtotime("-5 day")),date("Y-m-d",strtotime("-5 day")));
+            $this->getEvents(date("Y-m-d",strtotime("+5 day")),date("Y-m-d",strtotime("+5 day")));
         }else if ($action == "initCache"){
             (new Translate())->initCache();
         }
@@ -67,7 +67,6 @@ class SyncPhysical extends Command
             $resp['match_hometeam_name'] = $this->translate->to($resp['match_hometeam_name']);
             $resp['match_awayteam_name'] = $this->translate->to($resp['match_awayteam_name']);
             $resp['match_referee'] = $this->translate->to($resp['match_referee']);
-            $resp['stage_name'] = $this->translate->to($resp['stage_name']);
             $resp['match_stadium'] = $this->translate->to($resp['match_stadium']);
             $resp['match_round'] = $this->translate->to($resp['match_round']);
             foreach ($resp['goalscorer'] as &$goalscorer) {
