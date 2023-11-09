@@ -41,7 +41,8 @@ class FootballController extends Controller
                 'match_awayteam_score',
                 'match_hometeam_halftime_score',
                 'match_awayteam_halftime_score',
-                'stage_name'
+                'stage_name',
+                'match_live'
             ]);
         // 查询已经结束的 赛果
         if ($request->get('status') == 1){
@@ -51,8 +52,7 @@ class FootballController extends Controller
         // 查询正在进行中的
         elseif ($request->get('status') == 2){
             $eventDb = $eventDb->where('match_date',date("Y-m-d"))
-                ->where('match_status','!=','Finished')
-                ->where('match_time','>',date("i:s"));
+                ->where('match_live',1);
         }
         if ($request->has('date')){
             $eventDb = $eventDb->where('match_date',$request->get('date'));
