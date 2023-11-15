@@ -52,13 +52,13 @@ class FootballController extends Controller
         // 查询正在进行中的
         elseif ($request->get('status') == 2){
             $eventDb = $eventDb->where('match_date',date("Y-m-d"))
-                ->where('match_live',1);
+                ->where('match_live',"1");
         }
         if ($request->has('date')){
             $eventDb = $eventDb->where('match_date',$request->get('date'));
         }
-        $response = $eventDb->paginate(10);
-        return response()->json($response);
+        $response = $eventDb->get();
+        return response()->json(['code' => 0, 'data' => $response]);
     }
 
     /**
