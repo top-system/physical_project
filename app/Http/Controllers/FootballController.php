@@ -56,6 +56,8 @@ class FootballController extends Controller
         }
         if ($request->has('date')){
             $eventDb = $eventDb->where('match_date',$request->get('date'));
+        }else{
+            $eventDb = $eventDb->where('match_date',date("Y-m-d"));
         }
         $response = $eventDb->get();
         return response()->json(['code' => 0, 'data' => $response]);
