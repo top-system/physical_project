@@ -115,12 +115,8 @@ class SyncPhysical extends Command
             foreach ($resp['lineup']['away']['coach'] as &$coach) {
                 $coach['lineup_player'] = $this->translate->to($coach['lineup_player']);
             }
-            $ret = $this->eventDb->where('match_id',$resp['match_id'])->first();
-            if ($ret){
-                $this->eventDb->where('_id',(string)$ret['_id'])->update($resp);
-            }else{
-                $this->eventDb->insert($resp);
-            }
+            $ret = $this->eventDb->where('match_id',$resp['match_id'])->delete();
+            $this->eventDb->insert($resp);
             unset($resp);
         }
         return true;
