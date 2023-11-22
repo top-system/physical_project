@@ -117,10 +117,9 @@ class SyncPhysical extends Command
             }
             $ret = $this->eventDb->where('match_id',$resp['match_id'])->first();
             if ($ret){
-                $this->eventDb->where('_id',(string)$ret['_id'])->update($resp);
-            }else{
-                $this->eventDb->insert($resp);
+                $this->eventDb->where('_id',(string)$ret['_id'])->delete();
             }
+            $this->eventDb->insert($resp);
             unset($resp);
         }
         return true;
