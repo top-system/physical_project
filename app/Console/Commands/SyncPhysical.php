@@ -24,7 +24,7 @@ class SyncPhysical extends Command
      */
     protected $description = 'Command description';
 
-    private $eventDb;
+    private  $mongoDB;
     private $apiFootball;
     private $translate;
 
@@ -36,7 +36,7 @@ class SyncPhysical extends Command
     public function handle()
     {
         $action = $this->argument('action');
-        $this->eventDb = DB::connection('mongodb')->collection('events');
+        $this->mongoDB = DB::connection('mongodb');
         $this->apiFootball = ApiFootballService::getInstance();
         $this->translate = Translate::getInstance();
 
@@ -115,13 +115,16 @@ class SyncPhysical extends Command
             foreach ($resp['lineup']['away']['coach'] as &$coach) {
                 $coach['lineup_player'] = $this->translate->to($coach['lineup_player']);
             }
-            $ret = $this->eventDb->where('match_id',$resp['match_id'])->first();
+            $ret = $this->mongoDB->collection('events')->where('match_id',$resp['match_id'])->first();
             if ($ret){
-                $this->eventDb->where('_id',(string)$ret['_id'])->delete();
+                $this->mongoDB->collection('events')->where('_id',(string)$ret['_id'])->update($resp);
+            }else{
+                $this->mongoDB->collection('events')->insert($resp);
             }
-            $this->eventDb->insert($resp);
             unset($resp);
         }
         return true;
     }
 }
+
+
